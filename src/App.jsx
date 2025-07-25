@@ -16,9 +16,9 @@ const currYear = new Date().getFullYear();
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className="bg-gray-300 text-center p-4  w-full">
       <p>
-        Copyright &copy; {currYear}, Made with 💗 by <strong>Vasu</strong>
+        Copyright &copy; {currYear}, All rights reserved.
       </p>
     </footer>
   );

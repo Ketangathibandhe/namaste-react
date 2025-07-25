@@ -3,6 +3,7 @@ import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import { MENU_API } from "../utils/constants";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
  // const [resInfo, setResInfo] = useState(null);
@@ -39,20 +40,20 @@ const RestaurantMenu = () => {
     regularGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards || [];
   const menuCard = regularItems.find((c) => c?.card?.card?.itemCards);
   const itemCards = menuCard?.card?.card?.itemCards || [];
+//console.log(regularGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards)
 
+const categories =regularGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+  (c)=>(c.card?.card?.["@type"]==="type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
+)
+//console.log(categories)
   return (
-    <div>
-      <h1>{name}</h1>
-      <h2>{cuisines?.join(", ")}</h2>
-      <h2>{costForTwoMessage}</h2>
-      <h1>Menu</h1>
-      <ul>
-        {itemCards.map((item) => (
-          <li key={item.card.info.id}>
-            {item.card.info.name} - ₹ {item.card.info.price / 100}
-          </li>
-        ))}
-      </ul>
+    <div className="text-center py-5">
+      <h1 className="text-3xl font-bold">{name}</h1>
+      <h2 className="font-bold text-xl">{cuisines?.join(", ")}</h2>
+      {/*caterogy accordions*/}
+      {categories.map((category)=>(
+        <RestaurantCategory key={category?.card?.card?.title} data={category?.card?.card}/>
+      ))}
     </div>
   );
 };
