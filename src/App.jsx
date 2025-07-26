@@ -7,6 +7,8 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 //import Grocery from "./components/Grocery";
 import { lazy , Suspense } from "react";
+import { useState ,useEffect} from "react";
+import UserContext from "./utils/userContext";
 
 
 //chunking , codesplitting , dynamic bundling ,Lazy loading , ondemand loading , dynamic import 
@@ -25,12 +27,24 @@ const Footer = () => {
 };
 
 function App() {
+  const [userName, setUserName] = useState();
+
+   // Authentication
+    useEffect(() => {
+      // Make an API call and send username and password
+      const data = {
+        name: 'Ketan',
+      };
+      setUserName(data.name);
+    }, []);
+
   return (
-    <div className="app">
-      <Header />
-      <Outlet/>
-      <Footer />
-    </div>
+   <UserContext.Provider value={{ loggedInUser: userName }}>
+         <div className="app">
+           <Header />
+           <Outlet />
+         </div>
+    </UserContext.Provider>
   );
 }
 

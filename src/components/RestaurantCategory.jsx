@@ -1,9 +1,9 @@
 import ItemList from "./ItemList";
 import { useState } from "react";
-const RestaurantCategory = ({ data }) => {
- const [showItems, setShowItems]= useState(false);
+const RestaurantCategory = ({ data, showItems ,setShowIndex }) => {
+// const [showItems, setShowItems]= useState(false);
  const handleClick=()=>{
-   showItems===false? setShowItems(true):setShowItems(false)
+   setShowIndex()
  }
   return (
     <div className="flex justify-center m-5">

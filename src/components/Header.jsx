@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState ,useContext} from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/userContext";
+
 //import { listOfRestaurants} from './Body'
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
   const onlineStatus = useOnlineStatus();
+  const {loggedInUser} = useContext(UserContext)
+
   function handleClick() {
     if (btnName == "Login") {
       setBtnName("Logout");
@@ -43,6 +47,7 @@ const Header = () => {
               {btnName}
             </button>
           </div>
+          <li className="pl-3.5 font-bold">{loggedInUser}</li>
         </ul>
       </div>
     </div>

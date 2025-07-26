@@ -6,9 +6,11 @@ import useRestaurantMenu from "../utils/useRestaurantMenu";
 import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
- // const [resInfo, setResInfo] = useState(null);
+  // const [resInfo, setResInfo] = useState(null);
   const { resId } = useParams();
-  const resInfo = useRestaurantMenu(resId); //thsi is a custom react hook 
+  const resInfo = useRestaurantMenu(resId); //thsi is a custom react hook
+
+  const [showIndex , setShowIndex]= useState(null)
 
   // useEffect(() => {   //all this logic we will be doing inside the useRestaurantMenu hook
   //   if (resId) {
@@ -40,19 +42,27 @@ const RestaurantMenu = () => {
     regularGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards || [];
   const menuCard = regularItems.find((c) => c?.card?.card?.itemCards);
   const itemCards = menuCard?.card?.card?.itemCards || [];
-//console.log(regularGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards)
+  //console.log(regularGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards)
 
-const categories =regularGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-  (c)=>(c.card?.card?.["@type"]==="type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
-)
-//console.log(categories)
+  const categories =
+    regularGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (c) =>
+        c.card?.card?.["@type"] ===
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+  //console.log(categories)
   return (
     <div className="text-center py-5">
       <h1 className="text-3xl font-bold">{name}</h1>
       <h2 className="font-bold text-xl">{cuisines?.join(", ")}</h2>
       {/*caterogy accordions*/}
-      {categories.map((category)=>(
-        <RestaurantCategory key={category?.card?.card?.title} data={category?.card?.card}/>
+      {categories.map((category, index) => (
+        <RestaurantCategory
+          key={category?.card?.card?.title}
+          data={category?.card?.card}
+          showItems={index === showIndex ? true : false}
+          setShowIndex={()=>setShowIndex(index)}
+        />
       ))}
     </div>
   );
