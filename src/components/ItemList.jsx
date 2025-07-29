@@ -1,7 +1,17 @@
 import React from "react";
 import { CDN_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const ItemList = ({ items }) => {
+
+  const dispatch = useDispatch()
+const handleAddItem =(item)=>{
+  //dispatch Action 
+  dispatch(addItem(item))
+  console.log(item)
+}
+
   return (
     <div>
       {Array.isArray(items) ? (
@@ -34,7 +44,7 @@ const ItemList = ({ items }) => {
                 <div className="w-28 h-24 rounded-xl bg-gray-100" />
               )}
 
-              <button className="absolute  mt-22 bg-white text-green-600 font-bold px-4 py-1 rounded shadow">
+              <button onClick={()=>handleAddItem(item)} className="absolute  mt-22 bg-white text-green-600 font-bold px-4 py-1 rounded shadow">
                 ADD
               </button>
             </div>

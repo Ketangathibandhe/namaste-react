@@ -3,12 +3,17 @@ import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/userContext";
+import { useSelector } from "react-redux";
 
 //import { listOfRestaurants} from './Body'
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
   const onlineStatus = useOnlineStatus();
   const {loggedInUser} = useContext(UserContext)
+
+  // subscribing to the store using selector
+
+  const cartItems = useSelector((store)=>store.cart.items);
 
   function handleClick() {
     if (btnName == "Login") {
@@ -40,7 +45,7 @@ const Header = () => {
             <Link to={"/grocery"}>Grocery</Link>
           </li>
           <li className="pr-8"> 
-            <Link to={"/cart"}>Cart</Link>
+            <Link to={"/cart"}>Cart ({cartItems.length})</Link>
           </li>
           <div>
             <button className="bg-amber-400 px-2.5 py-1.5 rounded-sm w-28 cursor-pointer" onClick={handleClick} >
